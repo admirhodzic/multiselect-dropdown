@@ -13,4 +13,4 @@ Just add multiselect attribute to SELECT element.
         ... 
     </select>
 
-[Demo Page](demo.html)
+[Demo Page](https://admirhodzic.github.io/multiselect-dropdown/demo.html)
