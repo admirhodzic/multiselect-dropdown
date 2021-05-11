@@ -3,12 +3,12 @@ Pure JavaScript, no dependencies, dropdown list with multiselect capability.
 
 ![Sample screenshot](demo.png)
 ## Installation
-Just include multiselect-dropdown.js in your HTML.
+Include multiselect-dropdown.js in your HTML.
 
     <script src="multiselect-dropdown.js" ></script>
 
 ## Usage
-Just add multiselect attribute to SELECT element.
+Just add "multiple" attribute to SELECT elements.
     
     <select multiple > 
         ... 
