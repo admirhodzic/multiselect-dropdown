@@ -10,8 +10,12 @@ Include multiselect-dropdown.js in your HTML.
 ## Usage
 Just add "multiple" attribute to SELECT elements.
     
-    <select multiple > 
+    <select multiple id="sel1"> 
         ... 
     </select>
+
+To update options list, call *selectId.loadOptions()* where "selectId" is HTML select element.
+
+## Demo
 
 [Demo Page](https://admirhodzic.github.io/multiselect-dropdown/demo.html)

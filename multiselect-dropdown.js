@@ -87,35 +87,41 @@ function MultiselectDropdown(options){
     el.parentNode.insertBefore(div,el.nextSibling);
     var list=newEl('div',{class:'multiselect-dropdown-list'});
     div.appendChild(list);
-    Array.from(el.options).map(o=>{
-      var op=newEl('div',{class:o.selected?'checked':'',optEl:o})
-      var ic=newEl('input',{type:'checkbox',checked:o.selected});
-      op.appendChild(ic);
-      op.appendChild(newEl('label',{text:o.text}));
 
-      op.addEventListener('click',()=>{
-        op.classList.toggle('checked');
-        op.querySelector("input").checked=!op.querySelector("input").checked;
-        op.optEl.selected=!!!op.optEl.selected;
-        el.onchange();
-      });
-      ic.addEventListener('click',(ev)=>{
-        ic.checked=!ic.checked;
-      });
+    el.loadOptions=()=>{
+      list.innerHTML='';
+      Array.from(el.options).map(o=>{
+        var op=newEl('div',{class:o.selected?'checked':'',optEl:o})
+        var ic=newEl('input',{type:'checkbox',checked:o.selected});
+        op.appendChild(ic);
+        op.appendChild(newEl('label',{text:o.text}));
 
-      list.appendChild(op);
-    });
-    div.listEl=list;
+        op.addEventListener('click',()=>{
+          op.classList.toggle('checked');
+          op.querySelector("input").checked=!op.querySelector("input").checked;
+          op.optEl.selected=!!!op.optEl.selected;
+          el.onchange();
+        });
+        ic.addEventListener('click',(ev)=>{
+          ic.checked=!ic.checked;
+        });
 
-    div.refresh=()=>{
-      div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
-      Array.from(el.selectedOptions).map(x=>{
-        var c=newEl('span',{class:'optext',text:x.text});
-        div.appendChild(c);
+        list.appendChild(op);
       });
-      if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:config.placeholder}));
-    };
-    div.refresh();
+      div.listEl=list;
+
+      div.refresh=()=>{
+        div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
+        Array.from(el.selectedOptions).map(x=>{
+          var c=newEl('span',{class:'optext',text:x.text});
+          div.appendChild(c);
+        });
+        if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:config.placeholder}));
+      };
+      div.refresh();
+    }
+    el.loadOptions();
+    
     
     div.addEventListener('click',()=>{
       div.listEl.style.display='block';
