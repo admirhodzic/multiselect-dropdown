@@ -29,7 +29,7 @@ style.innerHTML = `
 }
 .multiselect-dropdown-list-wrapper{
   z-index: 100;
-  padding:4px;
+  padding:2px;
   border-radius: 4px;
   border: solid 1px #ced4da;
   display: none;
@@ -44,9 +44,17 @@ style.innerHTML = `
   margin-bottom:5px;
 }
 .multiselect-dropdown-list{
+  padding:2px;
   height: 15rem;
   overflow-y:auto;
   overflow-x: hidden;
+}
+.multiselect-dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+.multiselect-dropdown-list::-webkit-scrollbar-thumb {
+  background-color: #bec4ca;
+  border-radius:3px;
 }
 
 .multiselect-dropdown-list div{
