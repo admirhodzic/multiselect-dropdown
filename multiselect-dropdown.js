@@ -144,6 +144,7 @@ function MultiselectDropdown(options){
     div.addEventListener('click',()=>{
       div.listEl.style.display='block';
       search.focus();
+      search.select();
     });
     
     document.addEventListener('click', function(event) {
