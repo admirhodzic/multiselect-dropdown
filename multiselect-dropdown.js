@@ -38,11 +38,17 @@ style.innerHTML = `
   top:0;
   left: 0;
   right: 0;
+  background: white;
+}
+.multiselect-dropdown-list-wrapper .multiselect-dropdown-search{
+  margin-bottom:5px;
+}
+.multiselect-dropdown-list{
   height: 15rem;
   overflow-y:auto;
   overflow-x: hidden;
-  background: white;
 }
+
 .multiselect-dropdown-list div{
   padding: 5px;
 }
@@ -62,8 +68,8 @@ document.head.appendChild(style);
 
 function MultiselectDropdown(options){
   var config={
-    placeholder:'select',
     search:true,
+    height:'15rem',
     ...options
   };
   function newEl(tag,attrs){
@@ -83,13 +89,14 @@ function MultiselectDropdown(options){
 
   
   document.querySelectorAll("select[multiple]").forEach((el,k)=>{
+    
     var div=newEl('div',{class:'multiselect-dropdown',style:{width:config.style?.width??el.clientWidth+'px',padding:config.style?.padding??''}});
     el.style.display='none';
     el.parentNode.insertBefore(div,el.nextSibling);
     var listWrap=newEl('div',{class:'multiselect-dropdown-list-wrapper'});
-    var list=newEl('div',{class:'multiselect-dropdown-list'});
-    var search=config.search ? newEl('input',{class:config.searchInput?.class??'form-control',style:{width:'100%'},placeholder:'search'}) : null ;
-    if(search!==null) listWrap.appendChild(search);
+    var list=newEl('div',{class:'multiselect-dropdown-list',style:{height:config.height}});
+    var search=newEl('input',{class:['multiselect-dropdown-search'].concat([config.searchInput?.class??'form-control']),style:{width:'100%',display:el.attributes['multiselect-search']?.value==='true'?'block':'none'},placeholder:'search'});
+    listWrap.appendChild(search);
     div.appendChild(listWrap);
     listWrap.appendChild(list);
 
@@ -121,13 +128,13 @@ function MultiselectDropdown(options){
           var c=newEl('span',{class:'optext',text:x.text});
           div.appendChild(c);
         });
-        if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:config.placeholder}));
+        if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:el.attributes['placeholder']?.value??'select'}));
       };
       div.refresh();
     }
     el.loadOptions();
     
-    if(search!==null) search.addEventListener('input',()=>{
+    search.addEventListener('input',()=>{
       list.querySelectorAll("div").forEach(d=>{
         var txt=d.querySelector("label").innerText.toUpperCase();
         d.style.display=txt.includes(search.value.toUpperCase())?'block':'none';
@@ -136,7 +143,7 @@ function MultiselectDropdown(options){
 
     div.addEventListener('click',()=>{
       div.listEl.style.display='block';
-      if(search!==null) search.focus();
+      search.focus();
     });
     
     document.addEventListener('click', function(event) {
