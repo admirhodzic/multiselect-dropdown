@@ -1,5 +1,5 @@
 var style = document.createElement('style');
-style.setAttribute("id","FathGrid_styles");
+style.setAttribute("id","multiselect_dropdown_styles");
 style.innerHTML = `
 .multiselect-dropdown{
   display: inline-block;
@@ -27,7 +27,7 @@ style.innerHTML = `
 .multiselect-dropdown span.placeholder{
   color:#ced4da;
 }
-.multiselect-dropdown-list{
+.multiselect-dropdown-list-wrapper{
   z-index: 100;
   padding:4px;
   border-radius: 4px;
@@ -63,6 +63,7 @@ document.head.appendChild(style);
 function MultiselectDropdown(options){
   var config={
     placeholder:'select',
+    search:true,
     ...options
   };
   function newEl(tag,attrs){
@@ -82,11 +83,15 @@ function MultiselectDropdown(options){
 
   
   document.querySelectorAll("select[multiple]").forEach((el,k)=>{
-    var div=newEl('div',{class:'multiselect-dropdown',style:{width:config.style.width??el.clientWidth+'px',padding:config.style.padding??''}});
+    var div=newEl('div',{class:'multiselect-dropdown',style:{width:config.style?.width??el.clientWidth+'px',padding:config.style?.padding??''}});
     el.style.display='none';
     el.parentNode.insertBefore(div,el.nextSibling);
+    var listWrap=newEl('div',{class:'multiselect-dropdown-list-wrapper'});
     var list=newEl('div',{class:'multiselect-dropdown-list'});
-    div.appendChild(list);
+    var search=config.search ? newEl('input',{class:config.searchInput?.class??'form-control',style:{width:'100%'},placeholder:'search'}) : null ;
+    if(search!==null) listWrap.appendChild(search);
+    div.appendChild(listWrap);
+    listWrap.appendChild(list);
 
     el.loadOptions=()=>{
       list.innerHTML='';
@@ -108,7 +113,7 @@ function MultiselectDropdown(options){
 
         list.appendChild(op);
       });
-      div.listEl=list;
+      div.listEl=listWrap;
 
       div.refresh=()=>{
         div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
@@ -122,14 +127,21 @@ function MultiselectDropdown(options){
     }
     el.loadOptions();
     
-    
+    if(search!==null) search.addEventListener('input',()=>{
+      list.querySelectorAll("div").forEach(d=>{
+        var txt=d.querySelector("label").innerText.toUpperCase();
+        d.style.display=txt.includes(search.value.toUpperCase())?'block':'none';
+      });
+    });
+
     div.addEventListener('click',()=>{
       div.listEl.style.display='block';
+      if(search!==null) search.focus();
     });
     
     document.addEventListener('click', function(event) {
       if (!div.contains(event.target)) {
-        list.style.display='none';
+        listWrap.style.display='none';
         div.refresh();
       }
     });    
