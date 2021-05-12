@@ -28,6 +28,7 @@ style.innerHTML = `
   color:#ced4da;
 }
 .multiselect-dropdown-list-wrapper{
+  box-shadow: gray 0 3px 8px;
   z-index: 100;
   padding:2px;
   border-radius: 4px;

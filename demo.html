@@ -29,7 +29,7 @@
         </select>
 
 <hr/>
-        <label>Select 2 (searchable)</label>
+        <label>Select 2</label>
         <select name="field2" id="field2" multiple multiselect-search="true">
           <option>Abarth</option>
           <option>Alfa Romeo</option>
@@ -100,7 +100,7 @@
       </div></div>
       
 <br/><br/><br/>
-      <button onclick="field2.innerHTML='<option value=1>New option 1</option><option selected value=2>New option 2</option><option value=3>New option 3</option>';field2.loadOptions()">Load new options</button>
+      <button class="btn btn-light" onclick="field2.innerHTML='<option value=1>New option 1</option><option selected value=2>New option 2</option><option value=3>New option 3</option>';field2.loadOptions()">Load new options</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
