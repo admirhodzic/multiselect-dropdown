@@ -71,7 +71,8 @@ style.innerHTML = `
 .multiselect-dropdown-list div:hover{
   background-color: #ced4da;
 }
-
+.multiselect-dropdown span.maxselected {width:100%;}
+.multiselect-dropdown-all-selector {border-bottom:solid 1px #999;}
 `;
 document.head.appendChild(style);
 
@@ -81,7 +82,7 @@ function MultiselectDropdown(options){
     height:'15rem',
     placeholder:'select',
     txtSelected:'selected',
-    maxItems:4,
+    txtAll:'All',
     ...options
   };
   function newEl(tag,attrs){
@@ -114,6 +115,30 @@ function MultiselectDropdown(options){
 
     el.loadOptions=()=>{
       list.innerHTML='';
+      
+      if(el.attributes['multiselect-select-all']?.value=='true'){
+        var op=newEl('div',{class:'multiselect-dropdown-all-selector'})
+        var ic=newEl('input',{type:'checkbox'});
+        op.appendChild(ic);
+        op.appendChild(newEl('label',{text:config.txtAll}));
+  
+        op.addEventListener('click',()=>{
+          op.classList.toggle('checked');
+          op.querySelector("input").checked=!op.querySelector("input").checked;
+          
+          var ch=op.querySelector("input").checked;
+          list.querySelectorAll("input").forEach(i=>i.checked=ch);
+          Array.from(el.options).map(x=>x.selected=ch);
+  
+          el.dispatchEvent(new Event('change'));
+        });
+        ic.addEventListener('click',(ev)=>{
+          ic.checked=!ic.checked;
+        });
+  
+        list.appendChild(op);
+      }
+
       Array.from(el.options).map(o=>{
         var op=newEl('div',{class:o.selected?'checked':'',optEl:o})
         var ic=newEl('input',{type:'checkbox',checked:o.selected});
@@ -137,8 +162,8 @@ function MultiselectDropdown(options){
       div.refresh=()=>{
         div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
         var sels=Array.from(el.selectedOptions);
-        if(sels.length>config.maxItems){
-          div.appendChild(newEl('span',{class:'optext',text:sels.length+' '+config.txtSelected}));
+        if(sels.length>(el.attributes['multiselect-max-items']?.value??5)){
+          div.appendChild(newEl('span',{class:['optext','maxselected'],text:sels.length+' '+config.txtSelected}));          
         }
         else{
           sels.map(x=>{

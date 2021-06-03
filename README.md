@@ -3,22 +3,36 @@ Pure JavaScript, no dependencies, dropdown list with multiselect capability.
 
 ![Sample screenshot](demo.png)
 ## Installation
+
 Include multiselect-dropdown.js in your HTML.
 
     <script src="multiselect-dropdown.js" ></script>
 
 ## Usage
+
 Just add "multiple" attribute to SELECT elements.
     
     <select multiple id="sel1"> 
         ... 
     </select>
 
+### Custom Attributes
+
 To enable dynamic list search, add multiselect-search="true" attribute.
 
-    <select multiple id="sel1" multiselect-search="true"> 
+    <select multiple 
+        multiselect-search="true" 
+        multiselect-select-all="true" 
+        multiselect-max-items="3"
+    >
         ... 
     </select>
+
+To add "select all" option, set multiselect-select-all="true" .
+
+Attribute multiselect-max-items="3" sets maximum number of items displayed in the control.
+
+### JavaScript API
 
 To update options list, call *selectId.loadOptions()* where "selectId" is HTML select element.
 
