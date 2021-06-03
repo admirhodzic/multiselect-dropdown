@@ -79,6 +79,9 @@ function MultiselectDropdown(options){
   var config={
     search:true,
     height:'15rem',
+    placeholder:'select',
+    txtSelected:'selected',
+    maxItems:4,
     ...options
   };
   function newEl(tag,attrs){
@@ -133,11 +136,17 @@ function MultiselectDropdown(options){
 
       div.refresh=()=>{
         div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
-        Array.from(el.selectedOptions).map(x=>{
-          var c=newEl('span',{class:'optext',text:x.text});
-          div.appendChild(c);
-        });
-        if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:el.attributes['placeholder']?.value??'select'}));
+        var sels=Array.from(el.selectedOptions);
+        if(sels.length>config.maxItems){
+          div.appendChild(newEl('span',{class:'optext',text:sels.length+' '+config.txtSelected}));
+        }
+        else{
+          sels.map(x=>{
+            var c=newEl('span',{class:'optext',text:x.text});
+            div.appendChild(c);
+          });
+        }
+        if(0==el.selectedOptions.length) div.appendChild(newEl('span',{class:'placeholder',text:el.attributes['placeholder']?.value??config.placeholder}));
       };
       div.refresh();
     }
