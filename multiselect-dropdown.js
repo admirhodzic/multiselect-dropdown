@@ -24,6 +24,15 @@ style.innerHTML = `
   background-color:lightgray;
   padding:1px 0.75em; 
 }
+.multiselect-dropdown span.optext .optdel {
+  float: right;
+  margin: 0 -6px 1px 5px;
+  font-size: 0.7em;
+  margin-top: 2px;
+  cursor: pointer;
+  color: #666;
+}
+.multiselect-dropdown span.optext .optdel:hover { color: #c66;}
 .multiselect-dropdown span.placeholder{
   color:#ced4da;
 }
@@ -167,7 +176,10 @@ function MultiselectDropdown(options){
         }
         else{
           sels.map(x=>{
-            var c=newEl('span',{class:'optext',text:x.text});
+            var c=newEl('span',{class:'optext',text:x.text, srcOption: x});
+            if((el.attributes['multiselect-hide-x']?.value !== 'true'))
+              c.appendChild(newEl('span',{class:'optdel',text:'🗙', onclick:(ev)=>{c.srcOption.selected=false;el.loadOptions();div.refresh();ev.stopPropagation()}}));
+
             div.appendChild(c);
           });
         }

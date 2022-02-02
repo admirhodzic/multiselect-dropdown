@@ -19,7 +19,7 @@
       <h1>Multiselect-dropdown demo!</h1>
       <div class="row"><div class="col ">
         <label>Select 1</label>
-        <select name="field1" id="field1" multiple onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" >
+        <select name="field1" id="field1" multiple onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true">
           <option value="1">Audi</option>
           <option selected value="2">BMW</option>
           <option selected value="3">Mercedes</option>

@@ -24,6 +24,7 @@ To enable dynamic list search, add multiselect-search="true" attribute.
         multiselect-search="true" 
         multiselect-select-all="true" 
         multiselect-max-items="3"
+        multiselect-hide-x = "false"
     >
         ... 
     </select>
@@ -31,6 +32,8 @@ To enable dynamic list search, add multiselect-search="true" attribute.
 To add "select all" option, set multiselect-select-all="true" .
 
 Attribute multiselect-max-items="3" sets maximum number of items displayed in the control.
+
+"multiselect-hide-x", if true, hides a button to remove selected option.
 
 ### JavaScript API
 
