@@ -111,10 +111,14 @@ function MultiselectDropdown(options){
     return e;
   }
 
-  
-  document.querySelectorAll("select[multiple]").forEach((el,k)=>{
+  document.querySelectorAll("select[multiple]:not(select[msdropdown_script='done'])").forEach((el,k)=>{
+    
+    //mark elements that we already seen
+    el.setAttribute("msdropdown_script", "done");
     
     var div=newEl('div',{class:'multiselect-dropdown',style:{width:config.style?.width??el.clientWidth+'px',padding:config.style?.padding??''}});
+
+
     el.style.display='none';
     el.parentNode.insertBefore(div,el.nextSibling);
     var listWrap=newEl('div',{class:'multiselect-dropdown-list-wrapper'});
@@ -213,6 +217,11 @@ function MultiselectDropdown(options){
   });
 }
 
-window.addEventListener('load',()=>{
+
+function MultiselectDropdownReload(){
   MultiselectDropdown(window.MultiselectDropdownOptions);
+}
+
+window.addEventListener('load',()=>{
+  MultiselectDropdownReload();
 });
