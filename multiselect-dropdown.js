@@ -146,6 +146,12 @@ function MultiselectDropdown(options){
         ic.addEventListener('click',(ev)=>{
           ic.checked=!ic.checked;
         });
+        el.addEventListener('change', (ev)=>{
+          let itms=Array.from(list.querySelectorAll(":scope > div:not(.multiselect-dropdown-all-selector)")).filter(e=>e.style.display!=='none')
+          let existsNotSelected=itms.find(i=>!i.querySelector("input").checked);
+          if(ic.checked && existsNotSelected) ic.checked=false;
+          else if(ic.checked==false && existsNotSelected===undefined) ic.checked=true;
+        });
   
         list.appendChild(op);
       }
