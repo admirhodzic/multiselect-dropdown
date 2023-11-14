@@ -139,7 +139,7 @@ function MultiselectDropdown(options){
           
           var ch=op.querySelector("input").checked;
           list.querySelectorAll(":scope > div:not(.multiselect-dropdown-all-selector)")
-            .forEach(i=>{if(i.style.display!=='none'){i.querySelector("input").checked=ch; i.optEl.selected=ch}});
+            .forEach(i=>{if(i.style.display!=='none'){i.querySelector("input").checked=ch; i.classList.remove('checked'); i.optEl.selected=ch}});
   
           el.dispatchEvent(new Event('change'));
         });
