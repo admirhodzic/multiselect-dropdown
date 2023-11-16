@@ -123,7 +123,29 @@ function MultiselectDropdown(options){
     listWrap.appendChild(search);
     div.appendChild(listWrap);
     listWrap.appendChild(list);
+    el.selectOptions = (values) => {
+      Array.from(el.options).forEach(option => {
+        const shouldBeSelected = values.includes(option.value);
 
+        if (shouldBeSelected) {
+            option.selected = true;
+
+            if (option.listitemEl) {
+                option.listitemEl.classList.add('checked');
+                option.listitemEl.querySelector('input').checked = true;
+            }
+        } 
+        else {
+                option.selected = false;
+
+                if (option.listitemEl) {
+                    option.listitemEl.classList.remove('checked');
+                    option.listitemEl.querySelector('input').checked = false;
+                }
+            }
+        });
+        div.refresh();
+    }
     el.loadOptions=()=>{
       list.innerHTML='';
       
@@ -175,7 +197,7 @@ function MultiselectDropdown(options){
         list.appendChild(op);
       });
       div.listEl=listWrap;
-
+      
       div.refresh=()=>{
         div.querySelectorAll('span.optext, span.placeholder').forEach(t=>div.removeChild(t));
         var sels=Array.from(el.selectedOptions);
